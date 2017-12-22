@@ -16,6 +16,7 @@ export default class PersonSetting extends Component<{}> {
          this.props.navigation.navigate('ModalStack');
     }
     render() {
+
         return (
             <View style={styles.view}>
                 <Text>This is setting screen.</Text>
