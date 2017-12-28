@@ -13,6 +13,7 @@ import TestScrollView from "./TestScrollView";
 import MySectionList from "./TestSectionList";
 import TestCustomTouch from "./TestTouch";
 import CustomRequest from "./TestRequest";
+import Animation from "./TestAnimstion";
 
  class Me extends Component<{}> {
      static navigationOptions = {
@@ -54,7 +55,8 @@ import CustomRequest from "./TestRequest";
              {id:7, title: 'ScrollView', screen: 'KYBScrollView'},
              {id:8, title: 'SectionList', screen: 'KYBSectionList'},
              {id:9, title: 'TouchableHighlight', screen: 'KYBTouch'},
-             {id:10, title: 'Request', screen: 'KYBRequest'}
+             {id:10, title: 'Request', screen: 'KYBRequest'},
+             {id:11, title: 'Animation', screen: 'KYBAnimation'}
          ]
          return (
              <View style={styles.view}>
@@ -95,7 +97,8 @@ const MeNavigator = StackNavigator({
     KYBScrollView: { screen: TestScrollView },
     KYBSectionList: { screen: MySectionList },
     KYBTouch: { screen: TestCustomTouch },
-    KYBRequest: { screen: CustomRequest }
+    KYBRequest: { screen: CustomRequest },
+    KYBAnimation: { screen: Animation }
 });
 
  export default MeNavigator;

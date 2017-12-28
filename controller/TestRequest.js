@@ -6,21 +6,20 @@ import {
     TouchableHighlight,
     StyleSheet
 } from 'react-native';
+import EnvironmentConfig from './EnvironmentConfig';
 
 class RequestUtil extends Component {
     constructor(props) {
         super(props);
     }
 
-    static getRequest(url, params, successBlock: (responseData: { string: void }) => void, failureBlock: (error: Error) => void) {
-        let header = new Headers();
+    static getRequest(url, params, successBlock: (responseData: Object) => void, failureBlock: (error: Error) => void) {
         let httpInit = {
             method: 'GET',
-            header: header,
         };
         fetch(url, httpInit).then(function (response) {
             if (response.ok) {
-                return response.blob();
+                return response.json();
             }
             throw new Error('Network response was not ok.');
         }).then(function (responseData) {
@@ -33,8 +32,36 @@ class RequestUtil extends Component {
                 failureBlock(error);
             }
         });
-    }
+    };
 
+    static postRequest(url, params, successBlock:((responseData) => void), failureBlock: (error: Error) => void) {
+        let header = new Headers();
+        let httpInit = {
+            method: 'POST',
+            header: header,
+        };
+        fetch(url, httpInit).then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Network response was not ok.');
+        }).then(function (responseData) {
+            if (successBlock !== undefined) {
+                successBlock(responseData);
+            }
+        }).catch(function (error) {
+            // 处理错误
+            if (failureBlock !== undefined) {
+                failureBlock(error);
+            }
+        });
+    };
+
+    render() {
+        return (
+            <View/>
+        );
+    }
 }
 
 export default class CustomRequest extends Component {
@@ -42,8 +69,11 @@ export default class CustomRequest extends Component {
         headerTitle: '网络请求'
     };
 
-    _test() {
-        setTimeout()
+    constructor(props) {
+        super(props);
+        this.state = {
+            token: EnvironmentConfig.token
+        };
     }
     _onPressXMLRequest = () => {
         let request = new XMLHttpRequest();
@@ -57,28 +87,34 @@ export default class CustomRequest extends Component {
                 alert('请求失败');
             }
         };
-        request.open('GET', 'https://httpbin.org/get');
+        request.open('GET', 'http://www.sojson.com/api/qqmusic/8446666');
         request.send();
     };
     _onPressFetch = () => {
-        RequestUtil.getRequest('https://httpbin.org/get', null, (responseData) => {
-            alert('Success');
+        RequestUtil.getRequest('https://facebook.github.io/react-native/movies.json', null, (responseData) => {
+            alert('Success: ' + JSON.stringify(responseData));
         }, (error) => {
             alert('Failure,' + error.message);
         });
-        /*
-        fetch('https://httpbin.org/get')
-            .then(function (data) {
-                return data.text();
-            })
-            .then((responseText) => {
-                alert('success');
-                }
-            )
-            .catch((error) => {
-               alert('failure');
-            });
-            */
+    };
+    _onPressPostFetch = () => {
+        RequestUtil.postRequest('http://www.hangge.com/jsonData.php', null, (responseData) => {
+            alert('request success : ' + responseData.toString());
+        }, (error) => {
+            alert('Failure,' + error.message);
+        });
+    };
+    _onChangeToken = () => {
+        EnvironmentConfig.token = 'Hello, kennyBest';
+        this.setState({
+            token: EnvironmentConfig.token
+        });
+    };
+    _onClean = () => {
+        EnvironmentConfig.token = '';
+        this.setState({
+            token: EnvironmentConfig.token
+        });
     };
     render() {
         return (
@@ -95,7 +131,29 @@ export default class CustomRequest extends Component {
                     title={'Fetch'}
                     onPress={this._onPressFetch}
                 />
-                <RequestUtil/>
+                <Button
+                    style={{marginTop: 10}}
+                    title={'PostFetch'}
+                    onPress={this._onPressPostFetch}
+                />
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                >
+                    <Button
+                        style={{marginTop: 10, borderWidth: 1, borderColor: 'blue'}}
+                        title={'change token ' + this.state.token}
+                        onPress={this._onChangeToken}
+                    />
+                    <Button
+                        style={{marginTop: 10, borderWidth: 1, borderColor: 'blue'}}
+                        title={'clean'}
+                        onPress={this._onClean}
+                    />
+                </View>
             </View>
         );
     }
