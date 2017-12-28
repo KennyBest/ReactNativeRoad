@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { View, DatePickerIOS, Button, Alert, Picker, ProgressViewIOS, Text } from 'react-native';
+import { View, DatePickerIOS, Button, Alert, Picker, ProgressViewIOS, Text,
+    SegmentedControlIOS,
+    Dimensions,
+    ScrollView,
+    Slider,
+    Switch
+} from 'react-native';
+import TestScrollView from "./TestScrollView";
+
+var {width, height} = Dimensions.get('window');
 
 /*
 *  DatePickerIOS 没有默认大小
@@ -84,7 +93,10 @@ export default class BasicControl extends Component {
         super(props);
         this.state = {
             date: new Date(),
-            progress: 0.5
+            progress: 0.5,
+            selectedIndex: 0,
+            step: 0,
+            isSwitch: true
         };
     }
 
@@ -114,27 +126,85 @@ export default class BasicControl extends Component {
     render() {
         let array = ['java', 'C#', 'C++', 'Swift', 'Object-C'];
         return (
-            <View style={{
-                flex: 1,
-                justifyContent: 'flex-start',
-                alignItems: 'center'
-            }}>
-                <KYBDatePicker date={this.state.date} handleDateChange={this.handleDateChange.bind(this)} />
-                <KYBItemSelect source={array} onHandleSelect={this.handlePickerSelect.bind(this)} />
-                <Text style={{marginTop: 12}}>ProgressViewIOS</Text>
-                <ProgressViewIOS
-                    style={{
-                        marginTop: 10,
-                        marginLeft: 12,
-                        marginRight: 12,
-                        width: 200
-                    }}
-                    progress={this.state.progress}
-                    progressTintColor={'red'}
-                    progressViewStyle={'default'}
-                    trackTintColor={'blue'}
-                />
-            </View>
+            <ScrollView
+                contentViewStyle={{
+                    width: width,
+                }}
+            >
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'flex-start',
+                    alignItems: 'center'
+                }}>
+                    <KYBDatePicker date={this.state.date} handleDateChange={this.handleDateChange.bind(this)} />
+                    <KYBItemSelect source={array} onHandleSelect={this.handlePickerSelect.bind(this)} />
+                    <Text style={{marginTop: 12}}>ProgressViewIOS</Text>
+                    <ProgressViewIOS
+                        style={{
+                            marginTop: 10,
+                            marginLeft: 12,
+                            marginRight: 12,
+                            width: 200
+                        }}
+                        progress={this.state.progress}
+                        progressTintColor={'red'}
+                        progressViewStyle={'default'}
+                        trackTintColor={'blue'}
+                    />
+                    <SegmentedControlIOS
+                        style={{
+                            marginTop: 10,
+                            width: width - 24,
+                            height: 30
+                        }}
+                        values={['简介', '详情', '评价']}
+                        selectedIndex={this.state.selectedIndex}
+                        onChange={(event) => {
+                            this.setState({
+                                selectedIndex: event.nativeEvent.selectedIndex
+                            });
+                        }}
+                    />
+                    <Text>Slider</Text>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <Slider
+                            style={{width: 150}}
+                            minimumValue={0}
+                            maximumValue={1}
+                            minimumTrackTintColor={'green'}
+                            maximumTrackTintColor={'lightgray'}
+                            onValueChange={(value) => {
+                                this.setState({
+                                    step: value
+                                });
+                            }}
+                        />
+                        <Text style={{marginLeft: 10}}>{this.state.step.toFixed(1)}</Text>
+                    </View>
+                    <Text>Switch</Text>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Switch
+                        value={this.state.isSwitch}
+                        onValueChange={(value) => {
+                            this.setState({
+                                isSwitch: value
+                            });
+                        }}
+                        />
+                        <Text style={{marginLeft: 10}}>{'switch now is ' + this.state.isSwitch}</Text>
+                    </View>
+                </View>
+            </ScrollView>
         );
     }
 }

@@ -10,6 +10,9 @@ import TestMaskView from './TestMaskedViewIOS';
 import ModalView from  './TestModal';
 import { StackNavigator } from 'react-navigation';
 import TestScrollView from "./TestScrollView";
+import MySectionList from "./TestSectionList";
+import TestCustomTouch from "./TestTouch";
+import CustomRequest from "./TestRequest";
 
  class Me extends Component<{}> {
      static navigationOptions = {
@@ -48,7 +51,10 @@ import TestScrollView from "./TestScrollView";
              {id:4, title: 'TextInput', screen: 'KYBTextInput'},
              {id:5, title: 'MaskViewIOS', screen: 'KYBMaskView'},
              {id:6, title: 'Modal', screen: 'KYBModal'},
-             {id:7, title: 'ScrollView', screen: 'KYBScrollView'}
+             {id:7, title: 'ScrollView', screen: 'KYBScrollView'},
+             {id:8, title: 'SectionList', screen: 'KYBSectionList'},
+             {id:9, title: 'TouchableHighlight', screen: 'KYBTouch'},
+             {id:10, title: 'Request', screen: 'KYBRequest'}
          ]
          return (
              <View style={styles.view}>
@@ -86,7 +92,10 @@ const MeNavigator = StackNavigator({
     KYBTextInput: { screen: TestTextInput },
     KYBMaskView: { screen: TestMaskView },
     KYBModal: { screen: ModalView },
-    KYBScrollView: { screen: TestScrollView }
+    KYBScrollView: { screen: TestScrollView },
+    KYBSectionList: { screen: MySectionList },
+    KYBTouch: { screen: TestCustomTouch },
+    KYBRequest: { screen: CustomRequest }
 });
 
  export default MeNavigator;
