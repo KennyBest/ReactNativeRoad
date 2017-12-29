@@ -14,6 +14,8 @@ import MySectionList from "./TestSectionList";
 import TestCustomTouch from "./TestTouch";
 import CustomRequest from "./TestRequest";
 import Animation from "./TestAnimstion";
+import AppStateExample from "./TestAppState";
+import AsyncStorageExample from "./TestAsyncStorage";
 
  class Me extends Component<{}> {
      static navigationOptions = {
@@ -56,7 +58,9 @@ import Animation from "./TestAnimstion";
              {id:8, title: 'SectionList', screen: 'KYBSectionList'},
              {id:9, title: 'TouchableHighlight', screen: 'KYBTouch'},
              {id:10, title: 'Request', screen: 'KYBRequest'},
-             {id:11, title: 'Animation', screen: 'KYBAnimation'}
+             {id:11, title: 'Animation', screen: 'KYBAnimation'},
+             {id:12, title: 'AppState', screen: 'KYBAppState'},
+             {id:13, title: 'AsyncStorage', screen: 'KYBAsyncStorage'}
          ]
          return (
              <View style={styles.view}>
@@ -98,7 +102,9 @@ const MeNavigator = StackNavigator({
     KYBSectionList: { screen: MySectionList },
     KYBTouch: { screen: TestCustomTouch },
     KYBRequest: { screen: CustomRequest },
-    KYBAnimation: { screen: Animation }
+    KYBAnimation: { screen: Animation },
+    KYBAppState: { screen: AppStateExample },
+    KYBAsyncStorage: { screen: AsyncStorageExample }
 });
 
  export default MeNavigator;
