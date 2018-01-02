@@ -9,6 +9,8 @@ import { Image } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Home from './controller/Home';
 import MeNavigator from './controller/Me';
+import thirdNavigator from "./controller/Third";
+import StackNavigator from 'react-navigation';
 
 export default class App extends Component<{}> {
     constructor(props) {
@@ -17,6 +19,33 @@ export default class App extends Component<{}> {
             selectedTab: 'me'
         };
     }
+
+    state = {
+        tabBarHeight: 49
+    };
+
+    changeTabBarHeight(isShow) {
+        this.setState({
+            tabBarHeight: isShow ? 49 : 0
+        });
+    }
+
+    renderTabBarItem(name: string, title: string, imageName: string, selectedImageName: string, component: Component) {
+        return (
+            <TabNavigator.Item
+                selected={this.state.selectedTab === name}
+                title={title}
+                renderIcon={() => <Image resizeMode={'contain'} source={imageName}/>}
+                renderSelectedIcon={() => <Image resizeMode={'contain'} source={selectedImageName}/>}
+                onPress={() => this.setState({
+                    selectedTab: name
+                })}
+            >
+                {component}
+            </TabNavigator.Item>
+        );
+    }
+
     render() {
         return (
             <TabNavigator>
@@ -40,3 +69,5 @@ export default class App extends Component<{}> {
         );
     }
 }
+
+

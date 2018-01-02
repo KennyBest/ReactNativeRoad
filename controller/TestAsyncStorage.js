@@ -7,14 +7,17 @@ import {
 
     StyleSheet
 } from 'react-native';
+import AsyncStorageUtil from "../Utils/AsyncStorageUtil";
 
 export default class AsyncStorageExample extends Component {
     static navigationOptions = {
-        headerTitle: 'AsyncStorge'
+        headerTitle: 'AsyncStorge',
+        tabBarVisible: false
     };
 
     state = {
-        name: ''
+        name: '',
+        work: 'undefined'
     };
 
     _onPressSave = () => {
@@ -52,15 +55,36 @@ export default class AsyncStorageExample extends Component {
         }
     };
 
+    _onUtilSet = () => {
+       AsyncStorageUtil.setItem('work', 'coder');
+    };
+
+    _onUtilGet = () => {
+        AsyncStorageUtil.getItem('work', (ret) => {
+            this.setState({
+                work: ret
+            });
+        });
+    };
+
+    _onUtilRemove = () => {
+        AsyncStorageUtil.removeItem('work');
+        this._onUtilGet();
+    };
+
     render() {
         let buttons = [
             {id:0, title: 'save', onPress: this._onPressSave},
             {id:1, title: 'fetch', onPress: this._onPressFetch},
-            {id:2, title: 'clear', onPress: this._onClear}
+            {id:2, title: 'clear', onPress: this._onClear},
+            {id:3, title: 'Util_set', onPress: this._onUtilSet},
+            {id:4, title: 'Util_get', onPress: this._onUtilGet},
+            {id:5, title: 'Util_remove', onPress: this._onUtilRemove}
         ];
         return (
             <View style={styles.view}>
                 <Text>Name: { this.state.name }</Text>
+                <Text>Work: { this.state.work }</Text>
                 {
                     buttons.map((item) => <Button key={item.id} title={item.title} onPress={item.onPress}/>)
                 }
