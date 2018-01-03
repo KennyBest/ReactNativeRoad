@@ -6,11 +6,7 @@
 
 import React, { Component } from 'react';
 import { Image } from 'react-native';
-import TabNavigator from 'react-native-tab-navigator';
-import Home from './controller/Home';
-import MeNavigator from './controller/Me';
-import thirdNavigator from "./controller/Third";
-import StackNavigator from 'react-navigation';
+import TestNavigator from "./TestNavigator";
 
 export default class App extends Component<{}> {
     constructor(props) {
@@ -47,6 +43,16 @@ export default class App extends Component<{}> {
     }
 
     render() {
+        const navigator = TestNavigator;
+        return (
+            <TestNavigator
+            />
+        );
+    }
+}
+
+/*
+*  render() {
         return (
             <TabNavigator>
                 <TabNavigator.Item
@@ -67,7 +73,6 @@ export default class App extends Component<{}> {
                 </TabNavigator.Item>
             </TabNavigator>
         );
-    }
-}
+    }*/
 
 

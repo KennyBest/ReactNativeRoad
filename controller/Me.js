@@ -42,11 +42,11 @@ import AsyncStorageExample from "./TestAsyncStorage";
      }
 
      handleClickSetting() {
-         this.props.navigation.navigate('Setting');
+         // this.props.navigation.navigate('Setting');
      }
 
      render() {
-         const {navigate} = this.props.navigation;
+         // const {navigate} = this.props.navigation;
          let buttons = [
              {id:1, title: 'Basic Control', screen: 'MapView'},
              {id:2, title: 'FlatList', screen: 'KYBFlatList'},
@@ -69,7 +69,8 @@ import AsyncStorageExample from "./TestAsyncStorage";
                  {
                      buttons.map((item) => {
                          return <Button key={item.id} title={item.title} onPress={() => {
-                             navigate(item.screen);
+                             // navigate(item.screen);
+                             this.props.navigator.
                          }}/>;
                      })
                  }
@@ -107,4 +108,4 @@ const MeNavigator = StackNavigator({
     KYBAsyncStorage: { screen: AsyncStorageExample }
 });
 
- export default MeNavigator;
+export default Me;
