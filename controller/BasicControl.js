@@ -136,6 +136,9 @@ export default class BasicControl extends Component {
                     justifyContent: 'flex-start',
                     alignItems: 'center'
                 }}>
+                    <Button title={'change TabBar'} onPress={ () =>
+                        this.props.screenProps.handleTabBar2(false)
+                    }/>
                     <KYBDatePicker date={this.state.date} handleDateChange={this.handleDateChange.bind(this)} />
                     <KYBItemSelect source={array} onHandleSelect={this.handlePickerSelect.bind(this)} />
                     <Text style={{marginTop: 12}}>ProgressViewIOS</Text>

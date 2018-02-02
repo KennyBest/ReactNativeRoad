@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Button, Alert, AlertIOS } from  'react-native';
+import { Text, View, StyleSheet, Button, Alert, AlertIOS,
+    ScrollView
+} from  'react-native';
+import { StackNavigator } from 'react-navigation';
+
 import PersonSetting from './PersonSetting';
 import ModalStack from './Login';
 import BasicControl from './BasicControl';
@@ -8,7 +12,7 @@ import TestImage from './TestImage';
 import TestTextInput from './TestTextInput';
 import TestMaskView from './TestMaskedViewIOS';
 import ModalView from  './TestModal';
-import { StackNavigator } from 'react-navigation';
+
 import TestScrollView from "./TestScrollView";
 import MySectionList from "./TestSectionList";
 import TestCustomTouch from "./TestTouch";
@@ -16,6 +20,10 @@ import CustomRequest from "./TestRequest";
 import Animation from "./TestAnimstion";
 import AppStateExample from "./TestAppState";
 import AsyncStorageExample from "./TestAsyncStorage";
+import TestCameraRoll from './TestCameraRoll';
+import TestClipboard from './TestClipboard';
+import TestWebView from "./TestWebView";
+import TestLayout from "./TestLayout";
 
  class Me extends Component<{}> {
      static navigationOptions = {
@@ -38,7 +46,8 @@ import AsyncStorageExample from "./TestAsyncStorage";
                     {text: 'OK'}
                 ]
             )
-         }} />
+         }}
+         />
      }
 
      handleClickSetting() {
@@ -46,7 +55,7 @@ import AsyncStorageExample from "./TestAsyncStorage";
      }
 
      render() {
-         // const {navigate} = this.props.navigation;
+         const {navigate} = this.props.navigation;
          let buttons = [
              {id:1, title: 'Basic Control', screen: 'MapView'},
              {id:2, title: 'FlatList', screen: 'KYBFlatList'},
@@ -60,20 +69,27 @@ import AsyncStorageExample from "./TestAsyncStorage";
              {id:10, title: 'Request', screen: 'KYBRequest'},
              {id:11, title: 'Animation', screen: 'KYBAnimation'},
              {id:12, title: 'AppState', screen: 'KYBAppState'},
-             {id:13, title: 'AsyncStorage', screen: 'KYBAsyncStorage'}
-         ]
+             {id:13, title: 'AsyncStorage', screen: 'KYBAsyncStorage'},
+             {id:14, title: 'CameraRoll', screen: 'KYBCameraRoll'},
+             {id:15, title: 'Clipboard', screen: 'KYBClipboard'},
+             {id:16, title: 'WebView', screen: 'KYBWebView'},
+             {id:17, title: 'layout', screen: 'KYBLayout' }
+         ];
          return (
              <View style={styles.view}>
                  <Text>Me</Text>
                  <Button onPress={this.handleClickSetting.bind(this)} title={'Setting'}/>
-                 {
-                     buttons.map((item) => {
-                         return <Button key={item.id} title={item.title} onPress={() => {
-                             // navigate(item.screen);
-                             this.props.navigator.
-                         }}/>;
-                     })
-                 }
+                 <ScrollView style={{
+                     flex: 1
+                 }}>
+                     {
+                         buttons.map((item) => {
+                             return <Button key={item.id} title={item.title} onPress={() => {
+                                 navigate(item.screen);
+                             }}/>;
+                         })
+                     }
+                 </ScrollView>
              </View>
          );
      }
@@ -105,7 +121,20 @@ const MeNavigator = StackNavigator({
     KYBRequest: { screen: CustomRequest },
     KYBAnimation: { screen: Animation },
     KYBAppState: { screen: AppStateExample },
-    KYBAsyncStorage: { screen: AsyncStorageExample }
+    KYBAsyncStorage: { screen: AsyncStorageExample },
+    KYBCameraRoll: { screen: TestCameraRoll },
+    KYBClipboard: { screen: TestClipboard },
+    KYBWebView: { screen: TestWebView },
+    KYBLayout: { screen: TestLayout }
 });
 
-export default Me;
+
+class MineController extends Component {
+    render() {
+        const { handleTabBar } = this.props.screenProps;
+        return (
+            <MeNavigator screenProps={{handleTabBar2: handleTabBar}}/>
+        );
+    }
+}
+export default MineController;

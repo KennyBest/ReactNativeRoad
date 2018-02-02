@@ -6,24 +6,21 @@
 
 import React, { Component } from 'react';
 import { Image } from 'react-native';
-import TestNavigator from "./TestNavigator";
-
+import { TabNavigator } from 'react-navigation';
+import Home from './controller/Home';
+import MineController from './controller/Me';
 export default class App extends Component<{}> {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTab: 'me'
+            selectedTab: 'me',
+            meTabBarVisible: true,
+            title: 'llj'
         };
     }
 
-    state = {
-        tabBarHeight: 49
-    };
-
-    changeTabBarHeight(isShow) {
-        this.setState({
-            tabBarHeight: isShow ? 49 : 0
-        });
+    changeTabBar(isShow: boolean) {
+      // 这里通过screenProps在嵌套导航界面中调用拿到的this不是当前组件
     }
 
     renderTabBarItem(name: string, title: string, imageName: string, selectedImageName: string, component: Component) {
@@ -43,13 +40,42 @@ export default class App extends Component<{}> {
     }
 
     render() {
-        const navigator = TestNavigator;
+        let AppTabNavigator = TabNavigator({
+            KHome: {
+                screen: Home,
+                navigationOptions: {
+                    title: '首页',
+                    tabBarIcon: ({focused, tintColor}) => {
+                        if (focused === true) {
+                            return  <Image source={ require('./images/home_selected.png')} />;
+                        }  else {
+                            return  <Image source={ require('./images/home.png')} />;
+                        }
+                    }
+                }
+            },
+            KMe: {
+                screen: MineController,
+                navigationOptions: (navigation) => ({
+                    title: '我的',
+                    tabBarIcon: ({focused, tintColor}) => {
+                        if (focused === true) {
+                            return  <Image source={ require('./images/me_selected.png')} />;
+                        }  else {
+                            return  <Image source={ require('./images/me.png')} />;
+                        }
+                    },
+                    tabBarVisible:this.state.meTabBarVisible,
+                }),
+            }
+        });
         return (
-            <TestNavigator
-            />
+           <AppTabNavigator screenProps={{handleTabBar: this.changeTabBar}}/>
         );
     }
 }
+
+
 
 /*
 *  render() {
